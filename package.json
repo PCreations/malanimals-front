@@ -1,0 +1,53 @@
+{
+  "name": "malanimals-front",
+  "version": "1.0.0",
+  "description": "Malanimals front to consume Malanimals API",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --compilers js:babel-register --recursive",
+    "test:watch": "npm test -- --watch",
+    "start": "node server.js"
+  },
+  "author": "Pierre Criulanscy <pcriulan@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "babel-polyfill": "^6.9.1",
+    "immutable": "^3.8.1",
+    "js-cookie": "^2.1.2",
+    "lodash": "^4.13.1",
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1",
+    "react-redux": "^4.4.5",
+    "react-redux-mdl": "0.0.4",
+    "react-virtualized": "^7.12.2",
+    "recompose": "^0.20.2",
+    "redux": "^3.5.2",
+    "redux-saga": "^0.11.0",
+    "reselect": "^2.5.3",
+    "superagent": "^2.1.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.10.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-react-hmre": "^1.1.1",
+    "babel-preset-stage-2": "^6.11.0",
+    "babel-register": "^6.9.0",
+    "css-loader": "^0.23.1",
+    "deep-equal": "^1.0.1",
+    "enzyme": "^2.4.1",
+    "expect": "^1.20.2",
+    "expect-immutable": "0.0.3",
+    "express": "^4.14.0",
+    "mocha": "^2.5.3",
+    "react-addons-perf": "^15.2.1",
+    "redux-devtools": "^3.3.1",
+    "redux-devtools-dock-monitor": "^1.1.1",
+    "redux-devtools-log-monitor": "^1.0.11",
+    "redux-logger": "^2.6.1",
+    "webpack": "^1.13.1",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-hot-middleware": "^2.12.1"
+  }
+}
