@@ -4,8 +4,8 @@ import onlyUpdateForKeys from 'recompose/onlyUpdateForKeys'
 
 import {
     RaisedButton,
-    MDLtr,
-    MDLtd,
+    ListItem,
+    SubDiv,
     Checkbox
 } from 'react-redux-mdl'
 
@@ -30,7 +30,7 @@ const animalCellStyle = {
     fontSize: '16px'
 }
 
-const AnimalRowContainer = ({
+const AnimalItemContainer = ({
     id,
     name,
     state,
@@ -41,45 +41,48 @@ const AnimalRowContainer = ({
     handleSetToDelete,
     setEditMode
 }) => (
-    <MDLtr key={id} selected={toDelete}>
-        <MDLtd>
-            <Checkbox
-                checked={toDelete}
-                onChange={(e) => handleSetToDelete(e.target.checked)}/>
-        </MDLtd>
-        <MDLtd>
+    <ListItem>
+        <SubDiv type='primary'>
             {state == ANIMAL_STATE.NOT_SAVED || state == ANIMAL_STATE.NEW ? (
                 <EditingAnimalItem
                     name={name}
                     state={state}
                     onChange={handleChange}/>
             ) : (
-                <span style={animalCellStyle}>
+                <span>
                     {name}
                 </span>
             )}
-            <div style={{ display: 'inline-block' }}>
-                {(state != ANIMAL_STATE.NOT_SAVED && state != ANIMAL_STATE.NEW) ? (
-                    <RaisedButton
-                        onClick={() => setEditMode(name)}
-                        style={{
-                            marginLeft: '10px'
-                        }}>
-                        {'Edit'}
-                    </RaisedButton>
-                ) : (
-                    <RaisedButton
-                        onClick={() => handleSave(id)}
-                        disabled={name.length == 0}
-                        style={{
-                            marginLeft: '10px'
-                        }}>
-                        {'Save'}
-                    </RaisedButton>
-                )}
-            </div>
-        </MDLtd>
-    </MDLtr>
+        </SubDiv>
+        <SubDiv type='secondary'>
+            {(state != ANIMAL_STATE.NOT_SAVED && state != ANIMAL_STATE.NEW) ? (
+                <RaisedButton
+                    onClick={() => setEditMode(name)}
+                    style={{
+                        marginLeft: '10px'
+                    }}>
+                    {'Edit'}
+                </RaisedButton>
+            ) : (
+                <RaisedButton
+                    onClick={() => handleSave(id)}
+                    disabled={name.length == 0}
+                    primary
+                    colored
+                    accent
+                    style={{
+                        marginLeft: '10px'
+                    }}>
+                    {'Save'}
+                </RaisedButton>
+            )}
+        </SubDiv>
+        <SubDiv type='secondary'>
+            <Checkbox
+                checked={toDelete}
+                onChange={(e) => handleSetToDelete(e.target.checked)}/>
+        </SubDiv>
+    </ListItem>
 )
 
 
@@ -87,10 +90,10 @@ const enhance = onlyUpdateForKeys(['id','name','state','toDelete'])
 
 
 export default enhance(connect(
-    (state, { id }) => ({
+    (_, { id }) => (state) => ({
         ...getAnimal(state, id)
     }),
-    (dispatch, { id }) => ({
+    (_, { id }) => (dispatch) => ({
         handleChange(name) {
             dispatch(rehydrate({ id, name }))
         },
@@ -107,4 +110,4 @@ export default enhance(connect(
             dispatch(rehydrate({ id, name }))
         }
     })
-)(AnimalRowContainer))
+)(AnimalItemContainer))

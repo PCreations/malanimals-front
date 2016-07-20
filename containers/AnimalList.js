@@ -5,13 +5,13 @@ import onlyUpdateForKeys from 'recompose/onlyUpdateForKeys'
 import lifecycle from 'recompose/lifecycle'
 import renderComponent from 'recompose/renderComponent'
 import branch from 'recompose/branch'
+import Infinite from 'react-infinite'
 import {
     Spinner,
     Checkbox,
-    MDLtable,
-    MDLthead,
-    MDLtr,
-    MDLth,
+    List,
+    ListItem,
+    SubDiv,
     RaisedButton
 } from 'react-redux-mdl'
 import {
@@ -26,9 +26,10 @@ import {
     batchDelete
 } from '../actions'
 
-import { AnimalList } from '../components/'
+import AnimalItemContainer from './AnimalItemContainer'
+import { EmptyState } from '../components'
 
-class AnimalTable extends React.Component {
+class AnimalList extends React.Component {
     constructor(props) {
         super(props)
     }
@@ -41,17 +42,16 @@ class AnimalTable extends React.Component {
 
     render() {
         return this.props.areAllAnimalsFetched ? (
-            <MDLtable>
-                <MDLthead>
-                    <MDLtr>
-                        <MDLth>
-                            <Checkbox
-                                checked={this.props.areAllSetToDelete}
-                                onChange={(e) => this.props.toggleAll(e.target.checked)}/>
-                        </MDLth>
-                        <MDLth nonNumeric>
+            this.props.ids.length == 0 ? (
+                <EmptyState handleAdd={this.props.handleAdd}/>
+            ) : (
+                <List>
+                    <ListItem>
+                        <SubDiv type='primary'>
                             {'Animal\'s name'}
-                            {this.props.areAnySetToDelete && (
+                        </SubDiv>
+                        {this.props.areAnySetToDelete && (
+                            <SubDiv type='secondary' href="#">
                                 <RaisedButton
                                     primary
                                     colored
@@ -59,13 +59,20 @@ class AnimalTable extends React.Component {
                                     style={{
                                         marginLeft: '20px'
                                     }}
-                                    onClick={this.props.batchDelete}>{'Delete selected'}</RaisedButton>
-                            )}
-                        </MDLth>
-                    </MDLtr>
-                </MDLthead>
-                <AnimalList ids={this.props.ids}/>
-            </MDLtable>
+                                    onClick={this.props.batchDelete}>
+                                    {'Delete selected'}
+                                </RaisedButton>
+                            </SubDiv>
+                        )}
+                        <SubDiv type='action' href="#">
+                            <Checkbox
+                                checked={this.props.areAllSetToDelete}
+                                onChange={(e) => this.props.toggleAll(e.target.checked)}/>
+                        </SubDiv>
+                    </ListItem>
+                    {this.props.ids.map(id => <AnimalItemContainer key={id} id={id}/>)}
+                </List>
+            )
         ) : <Spinner active/>
     }
 }
@@ -88,4 +95,4 @@ export default connect(
             dispatch(batchDelete())
         }
     })
-)(AnimalTable)
+)(AnimalList)

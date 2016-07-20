@@ -4,7 +4,13 @@ export const areAllAnimalsFetched = (state) => state.allFetched
 
 export const getError = (state) => state.error
 
-export const getAnimals = (state) => state.animals.toList().toJS()
+export const getAnimals = (state) => state
+    .animals
+    .toList()
+    .sortBy(a => (
+        a.state == ANIMAL_STATE.NEW ? -Infinity : -1 * parseInt(a.id, 10)
+    ))
+    .toJS()
 
 export const getAnimalsIds = (state) => getAnimals(state).map(a => a.id)
 

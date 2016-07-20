@@ -1,11 +1,9 @@
-import AnimalList from './AnimalList'
 import AnimalItem from './AnimalItem'
 import EditingAnimalItem from './EditingAnimalItem'
-import Label from './Label'
+import EmptyState from './EmptyState'
 
 export {
-    AnimalList,
     AnimalItem,
     EditingAnimalItem,
-    Label
+    EmptyState
 }
