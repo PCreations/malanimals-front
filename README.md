@@ -31,3 +31,4 @@ You can do so in the `webpack.config.js` file by editing the `MALANIMALS_API` va
  - `git push heroku master`
  - `heroku ps:scale web=1`
  - `heroku open`
+ - `heroku logs --tail` to check bundle creation progression
