@@ -58,15 +58,7 @@ export const App = ({ handleAdd, error }) => (
                     {'+'}
                 </FabButton>
             </RippleEffect>
-            {error != '' && (
-                <Grid>
-                    <Cell col={12} tablet={8}>
-                        <p style={{ color: 'red', textAlign: 'center'}}>
-                            {`Oops...An error occured : "${error}"`}
-                        </p>
-                    </Cell>
-            </Grid>
-            )}
+            <ErrorContainer/>
             <Grid>
                 <Cell col={4} tablet={8} offsetDesktop={4}>
                     <AnimalList handleAdd={handleAdd}/>
@@ -77,9 +69,7 @@ export const App = ({ handleAdd, error }) => (
 )
 
 export default connect(
-    (_, {}) => (state) => ({
-        error: getError(state)
-    }),
+    null,
     (dispatch) => ({
         handleAdd() {
             dispatch(createTemp())

@@ -6,7 +6,7 @@ import { getError } from '../selectors'
 
 
 const ErrorContainer = pure(({ error }) => (
-    <p>{error != '' && <span style={{ color: 'red' }}>{error}</span>}</p>
+    <p style={{ textAlign: 'center', marginTop: '20px' }}>{error != '' && <span style={{ color: 'red' }}>{`Oops, an error occured : "${error}"`}</span>}</p>
 ))
 
 export default connect(
