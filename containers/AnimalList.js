@@ -71,7 +71,7 @@ class AnimalList extends React.Component {
                         </SubDiv>
                     </ListItem>
                     <Infinite
-                        containerHeight={500}
+                        containerHeight={800}
                         elementHeight={68}
                         useWindowAsScrollContainer>
                         {this.props.ids.map(id => <AnimalItemContainer key={id} id={id}/>)}
