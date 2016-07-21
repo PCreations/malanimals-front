@@ -24,6 +24,7 @@
     "react-dom": "^15.2.1",
     "react-infinite": "^0.9.2",
     "react-redux": "^4.4.5",
+    "react-redux-mdl": "0.0.7",
     "recompose": "^0.20.2",
     "redux": "^3.5.2",
     "redux-saga": "^0.11.0",
