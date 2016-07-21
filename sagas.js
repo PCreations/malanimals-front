@@ -1,6 +1,6 @@
 import { put, call, select, take, fork, actionChannel } from 'redux-saga/effects'
 import { takeEvery, buffers } from 'redux-saga'
-import uniqueid from 'lodash/uniqueid'
+import uniqueid from 'lodash.uniqueid'
 
 import * as api from './api'
 import * as actions from './actions'
