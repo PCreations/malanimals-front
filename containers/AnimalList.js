@@ -70,7 +70,12 @@ class AnimalList extends React.Component {
                                 onChange={(e) => this.props.toggleAll(e.target.checked)}/>
                         </SubDiv>
                     </ListItem>
-                    {this.props.ids.map(id => <AnimalItemContainer key={id} id={id}/>)}
+                    <Infinite
+                        containerHeight={500}
+                        elementHeight={68}
+                        useWindowAsScrollContainer>
+                        {this.props.ids.map(id => <AnimalItemContainer key={id} id={id}/>)}
+                    </Infinite>
                 </List>
             )
         ) : <Spinner active/>

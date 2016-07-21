@@ -2,8 +2,8 @@ var path = require('path')
 var webpack = require('webpack')
 
 module.exports = {
+  devtool: 'cheap-module-source-map',
   entry: [
-    'webpack-hot-middleware/client',
     './index'
   ],
   output: {
@@ -12,15 +12,19 @@ module.exports = {
     publicPath: '/public/'
   },
   plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.DefinePlugin({
-        MALANIMALS_API: "'http://localhost:5000/animals/'",
-        'process.env': {
-            'NODE_ENV': JSON.stringify('development'),
-            'BABEL_ENV': JSON.stringify('development')
-        },
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      minimize: true,
+      compress: {
+        warnings: false
+      }
     }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      },
+      MALANIMALS_API: "'https://pacific-anchorage-35879.herokuapp.com/animals/'"
+    })
   ],
   module: {
     loaders: [

@@ -36,10 +36,13 @@ export const App = ({ handleAdd }) => (
                 <LayoutSpacer/>
             </LayoutHeaderRow>
         </LayoutHeader>
-        <LayoutContent>
+        <LayoutContent style={{ zIndex: 'initial' }}>
             <RippleEffect>
                 <FabButton
-                    onClick={handleAdd}
+                    onClick={() => {
+                        window.scrollTo(0,0)
+                        handleAdd()
+                    }}
                     colored
                     style={{
                         position: 'fixed',
@@ -51,7 +54,7 @@ export const App = ({ handleAdd }) => (
                 </FabButton>
             </RippleEffect>
             <Grid>
-                <Cell col={4} offsetDesktop={4}>
+                <Cell col={4} tablet={8} offsetDesktop={4}>
                     <AnimalList handleAdd={handleAdd}/>
                 </Cell>
             </Grid>

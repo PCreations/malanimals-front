@@ -6,7 +6,9 @@
   "scripts": {
     "test": "mocha --compilers js:babel-register --recursive",
     "test:watch": "npm test -- --watch",
-    "start": "node server.js"
+    "build": "./node_modules/webpack/bin/webpack.js -p --config ./webpack.prod.config.js --progress --colors",
+    "start": "rm -rf ./public/ && node ./malanimals.js",
+    "start:prod": "npm run build && node ./malanimals.js production"
   },
   "author": "Pierre Criulanscy <pcriulan@gmail.com>",
   "license": "ISC",
@@ -16,11 +18,12 @@
     "js-cookie": "^2.1.2",
     "lodash": "^4.13.1",
     "react": "^15.2.1",
+    "react-addons-create-fragment": "^15.2.1",
+    "react-addons-pure-render-mixin": "^15.2.1",
     "react-addons-shallow-compare": "^15.2.1",
     "react-dom": "^15.2.1",
     "react-infinite": "^0.9.2",
     "react-redux": "^4.4.5",
-    "react-redux-mdl": "0.0.4",
     "recompose": "^0.20.2",
     "redux": "^3.5.2",
     "redux-saga": "^0.11.0",

@@ -17,6 +17,7 @@ const EditingAnimalItem = ({
             placeholder={'Name'}
             required
             floatingLabel
+            autoFocus
             style={{
                 width: '150px',
             }}/>

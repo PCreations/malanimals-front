@@ -19,7 +19,7 @@ const EmptyState = ({ handleAdd }) => (
             height: '199px',
             color: '#fff',
             background: 'url("https://getmdl.io/assets/demos/dog.png") bottom right 15% no-repeat #46B6AC'
-        }}>{'There is no animal yet :('}</CardTitle>
+        }}>{'There are no animals yet :('}</CardTitle>
         <CardText>{'Let\'s change that !'}</CardText>
         <CardActions>
             <RippleEffect>
