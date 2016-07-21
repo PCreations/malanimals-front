@@ -1,3 +1,8 @@
+# Running tests
+
+ - `cd` in the project root
+ - `npm run test`
+
 # Run locally
 
 ## With heroku toolbelt
