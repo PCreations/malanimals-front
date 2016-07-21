@@ -15,7 +15,7 @@ module.exports = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
-        MALANIMALS_API: "'http://localhost:5000/animals/'",
+        MALANIMALS_API: "'http://localhost:8000/animals/'",
         'process.env': {
             'NODE_ENV': JSON.stringify('development'),
             'BABEL_ENV': JSON.stringify('development')

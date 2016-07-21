@@ -160,7 +160,8 @@ describe('reducers', () => {
         ).toEqual({
             allFetched: false,
             error: '',
-            animals: {}
+            animals: {},
+            ids: []
         })
     })
     it('should handle FETCH_ALL_ANIMALS_REQUESTED', () => {
@@ -169,7 +170,8 @@ describe('reducers', () => {
         ).toEqual({
             allFetched: false,
             error: '',
-            animals: {}
+            animals: {},
+            ids: []
         })
     })
     it('should handle ALL_ANIMALS_RECEIVED', () => {
@@ -198,7 +200,8 @@ describe('reducers', () => {
                     name: 'a cat',
                     state: ANIMAL_STATE.SAVED
                 }
-            }
+            },
+            ids: ['1','2']
         })
     })
     it('should handle FETCH_ALL_ANIMALS_FAILED', () => {
@@ -208,7 +211,8 @@ describe('reducers', () => {
         ).toEqual({
             allFetched: false,
             error: 'some error',
-            animals: {}
+            animals: {},
+            ids: []
         })
     })
     it('should handle ANIMAL_REHYDRATED when animal is not new', () => {
@@ -222,7 +226,8 @@ describe('reducers', () => {
                     name: 'a cat',
                     state: ANIMAL_STATE.SAVED
                 }
-            })
+            }),
+            ids: List.of('42')
         }
         expect(
             toJS(reducer(previousState, action))
@@ -235,7 +240,8 @@ describe('reducers', () => {
                     name: 'a dog',
                     state: ANIMAL_STATE.NOT_SAVED
                 }
-            }
+            },
+            ids: ['42']
         })
     })
     it('should handle ANIMAL_REHYDRATED when animal is new', () => {
@@ -249,7 +255,8 @@ describe('reducers', () => {
                     name: 'a cat',
                     state: ANIMAL_STATE.NEW
                 }
-            })
+            }),
+            ids: List.of('42')
         }
         expect(
             toJS(reducer(previousState, action))
@@ -262,7 +269,8 @@ describe('reducers', () => {
                     name: 'a dog',
                     state: ANIMAL_STATE.NEW
                 }
-            }
+            },
+            ids: ['42']
         })
     })
     it('should handle ANIMAL_UPDATED when animal is not new', () => {
@@ -280,7 +288,8 @@ describe('reducers', () => {
                     name: 'a dog',
                     state: ANIMAL_STATE.NOT_SAVED
                 }
-            })
+            }),
+            ids: List.of('42')
         }
         expect(
             toJS(reducer(previousState, action))
@@ -294,7 +303,8 @@ describe('reducers', () => {
                     name: 'a dog',
                     state: ANIMAL_STATE.SAVED
                 }
-            }
+            },
+            ids: ['42']
         })
     })
     it('should handle ANIMAL_UPDATED when animal was new', () => {
@@ -318,7 +328,8 @@ describe('reducers', () => {
                     name: 'a dog',
                     state: ANIMAL_STATE.NEW
                 }
-            })
+            }),
+            ids: List.of('tempId','foo')
         }
         expect(
             toJS(reducer(previousState, action))
@@ -338,7 +349,8 @@ describe('reducers', () => {
                     name: 'a dog',
                     state: ANIMAL_STATE.SAVED
                 }
-            }
+            },
+            ids: ['42','foo']
         })
     })
     it('should handle UPDATE_ANIMAL_FAILED', () => {
@@ -352,7 +364,8 @@ describe('reducers', () => {
                     name: 'a dog',
                     state: ANIMAL_STATE.NOT_SAVED
                 }
-            })
+            }),
+            ids: List.of('42')
         }
         expect(
             toJS(reducer(previousState, action))
@@ -365,23 +378,44 @@ describe('reducers', () => {
                     name: 'a dog',
                     state: ANIMAL_STATE.NOT_SAVED
                 }
-            }
+            },
+            ids: ['42']
         })
     })
     it('should handle TEMP_ANIMAL_CREATED', () => {
         const action = actions.tempCreated({ tempId: 'tempId' })
+        const previousState = {
+            allFetched: false,
+            error: '',
+            animals: fromJS({
+                'foo': {
+                    ...initialAnimal,
+                    id: 'foo',
+                    name: 'a cat',
+                    state: ANIMAL_STATE.SAVED
+                },
+            }),
+            ids: List.of('foo')
+        }
         expect(
-            toJS(reducer(undefined, action))
+            toJS(reducer(previousState, action))
         ).toEqual({
             allFetched: false,
             error: '',
             animals: {
+                'foo': {
+                    ...initialAnimal,
+                    id: 'foo',
+                    name: 'a cat',
+                    state: ANIMAL_STATE.SAVED
+                },
                 'tempId': {
                     ...initialAnimal,
                     id: 'tempId',
                     state: ANIMAL_STATE.NEW
                 }
-            }
+            },
+            ids: ['tempId', 'foo']
         })
     })
     it('should handle ANIMAL_SET_TO_DELETE_FLAG', () => {
@@ -401,7 +435,8 @@ describe('reducers', () => {
                     state: ANIMAL_STATE.NOT_SAVED,
                     toDelete: false
                 }
-            })
+            }),
+            ids: List.of('foo','42')
         }
         const action = actions.toDelete({ id: '42', toDelete: true })
         expect(
@@ -422,7 +457,8 @@ describe('reducers', () => {
                     state: ANIMAL_STATE.NOT_SAVED,
                     toDelete: true
                 }
-            }
+            },
+            ids: ['foo','42']
         })
     })
     it('should handle ANIMAL_SET_TO_DELETE_FLAG_ALL', () => {
@@ -442,7 +478,8 @@ describe('reducers', () => {
                     state: ANIMAL_STATE.NOT_SAVED,
                     toDelete: false
                 }
-            })
+            }),
+            ids: List.of('foo','42')
         }
         const action = actions.toDeleteAll({ toDelete: true })
         expect(
@@ -463,7 +500,8 @@ describe('reducers', () => {
                     state: ANIMAL_STATE.NOT_SAVED,
                     toDelete: true
                 }
-            }
+            },
+            ids: ['foo','42']
         })
     })
     it('should handle ANIMAL_DELETION_SUCCESS', () => {
@@ -481,7 +519,8 @@ describe('reducers', () => {
                     name: 'a dog',
                     state: ANIMAL_STATE.DELETING
                 }
-            })
+            }),
+            ids: List.of('foo','42')
         }
         const action = actions.deleteSuccess({ id: '42' })
         expect(
@@ -495,7 +534,8 @@ describe('reducers', () => {
                     name: 'a cat',
                     state: ANIMAL_STATE.SAVED
                 }
-            }
+            },
+            ids: ['foo']
         })
     })
     it('should handle ANIMAL_DELETION_FAILED', () => {
@@ -513,7 +553,8 @@ describe('reducers', () => {
                     name: 'a dog',
                     state: ANIMAL_STATE.DELETING
                 }
-            })
+            }),
+            ids: List.of('foo','42')
         }
         const error = 'Error when trying to delete the animal object'
         const action = actions.deleteFailed({ id: '42', error })
@@ -533,7 +574,8 @@ describe('reducers', () => {
                     name: 'a dog',
                     state: ANIMAL_STATE.SAVED
                 }
-            }
+            },
+            ids: ['foo', '42']
         })
     })
 })
@@ -542,7 +584,8 @@ describe('reducers', () => {
 describe('selectors', () => {
     const state = {
         allFetched: false,
-        error: 'Some error',
+        error: { message: 'Some error' },
+        ids: List.of('foo','42','bar','baz'),
         animals: fromJS({
             'foo': {
                 id: 'foo',
@@ -576,43 +619,15 @@ describe('selectors', () => {
     it('should select the error', () => {
         expect(selectors.getError(state)).toEqual('Some error')
     })
-    it('should select the animals list', () => {
-        const expectedAnimals = [{
-                id: 'foo',
-                name: 'a cat',
-                state: 'saved',
-                toDelete: true
-            }, {
-                id: '42',
-                name: 'a dog',
-                state: 'deleting',
-                toDelete: true
-            }, {
-                id: 'bar',
-                name: 'a snake',
-                state: 'new',
-                toDelete: true
-            }, {
-                id: 'baz',
-                name: 'a frog',
-                state: 'not_saved',
-                toDelete: false
-            }
-        ]
-        const animals = selectors.getAnimals(state)
-        for (let a of expectedAnimals) {
-            expect(animals).toInclude(a)
-        }
-    })
-    it('should select the animals ids list', () => {
-        const animalsIds = selectors.getAnimalsIds(state)
+    it('should select the animals ids list and not recompute if the size of animals list didn\'t change', () => {
+        const animalsIds = selectors.getAnimalsIds(state).toJS()
         const expectedIds = ['foo','42','bar','baz']
         for (let id of expectedIds) {
             expect(animalsIds).toInclude(id)
         }
     })
-    it('should select the animals set to delete ids', () => {
-        const animalsIds = selectors.getToDeleteIds(state)
+    it('should select the animals set to delete ids and not recompute', () => {
+        const animalsIds = selectors.getToDeleteIds(state).toJS()
         const expectedIds = ['foo','42','bar']
         for (let id of expectedIds) {
             expect(animalsIds).toInclude(id)
@@ -631,14 +646,12 @@ describe('selectors', () => {
         expect(selectors.isNew(state, 'foo')).toEqual(false, 'foo should not be new')
     })
     it('should select whether all animals are set toDelete or not', () => {
-        expect(selectors.areAllSetToDelete(state)).toEqual(false)
         expect(selectors.areAllSetToDelete({
             ...state,
-            animals: state.animals.updateIn(['baz','toDelete'], () => true)
+            animals: state.animals.map(a => a.set('toDelete', true))
         })).toEqual(true)
     })
-    it('should select whether any animals are set toDelete or not', () => {
-        expect(selectors.areAnySetToDelete(state)).toEqual(true)
+    it('should select whether any animals are set toDelete', () => {
         expect(selectors.areAnySetToDelete({
             ...state,
             animals: state.animals.map(a => a.set('toDelete', false))

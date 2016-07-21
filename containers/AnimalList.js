@@ -2,9 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import compose from 'recompose/compose'
 import onlyUpdateForKeys from 'recompose/onlyUpdateForKeys'
-import lifecycle from 'recompose/lifecycle'
-import renderComponent from 'recompose/renderComponent'
-import branch from 'recompose/branch'
 import Infinite from 'react-infinite'
 import {
     Spinner,
@@ -35,14 +32,14 @@ class AnimalList extends React.Component {
     }
 
     componentWillMount() {
-        if (this.props.ids.length == 0) {
+        if (this.props.ids.size == 0) {
             this.props.fetchAll()
         }
     }
 
     render() {
         return this.props.areAllAnimalsFetched ? (
-            this.props.ids.length == 0 ? (
+            this.props.ids.size == 0 ? (
                 <EmptyState handleAdd={this.props.handleAdd}/>
             ) : (
                 <List>
@@ -81,6 +78,13 @@ class AnimalList extends React.Component {
         ) : <Spinner active/>
     }
 }
+
+const enhance = onlyUpdateForKeys([
+    'ids',
+    'areAllAnimalsFetched',
+    'areAllSetToDelete',
+    'areAnySetToDelete'
+])
 
 export default connect(
     (state) => ({

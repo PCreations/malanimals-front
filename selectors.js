@@ -2,24 +2,22 @@ import { ANIMAL_STATE } from './reducers'
 
 export const areAllAnimalsFetched = (state) => state.allFetched
 
-export const getError = (state) => state.error
+export const getError = (state) => state.error.message || ''
 
-export const getAnimals = (state) => state
-    .animals
-    .toList()
-    .sortBy(a => (
-        a.state == ANIMAL_STATE.NEW ? -Infinity : -1 * parseInt(a.id, 10)
-    ))
-    .toJS()
-
-export const getAnimalsIds = (state) => getAnimals(state).map(a => a.id)
+export const getAnimalsIds = (state) => state.ids
 
 export const getAnimal = (state, id) => state.animals.get(String(id)).toJS()
 
 export const isNew = (state, id) => getAnimal(state, id).state == ANIMAL_STATE.NEW
 
-export const areAllSetToDelete = (state) => getAnimals(state).every(a => a.toDelete)
+export const areAllSetToDelete = (state) => (
+    state.animals.every(a => a.get('toDelete'))
+)
 
-export const areAnySetToDelete = (state) => getAnimals(state).some(a => a.toDelete)
+export const areAnySetToDelete = (state) => (
+    state.animals.some(a => a.get('toDelete'))
+)
 
-export const getToDeleteIds = (state) => getAnimals(state).filter(a => a.toDelete).map(a => a.id)
+export const getToDeleteIds = (state) => (
+    state.animals.toList().filter(a => a.get('toDelete')).map(a => a.get('id'))
+)

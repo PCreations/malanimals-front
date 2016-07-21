@@ -134,10 +134,29 @@ const animals = (_animals = OrderedMap(), action = {}) => switcher({
 }, _animals, action)
 
 
+const ids = (ids = List(), action = {}) => switcher({
+
+    [types.ALL_ANIMALS_RECEIVED]: ({ animals }) => List(animals.map(a => a.id)),
+
+    [types.ANIMAL_DELETION_SUCCESS]: ({ id }) => ids.remove(ids.indexOf(id)),
+
+    [types.TEMP_ANIMAL_CREATED]: ({ tempId }) => ids.unshift(tempId),
+
+    [types.ANIMAL_UPDATED]: ({ id, animal }) => {
+        if (String(id) != String(animal.id)) {
+            return ids.remove(ids.indexOf(id)).unshift(String(animal.id))
+        }
+        return ids
+    }
+
+}, ids, action)
+
+
 const reducer = combineReducers({
     allFetched,
     error,
-    animals
+    animals,
+    ids
 })
 
 export default reducer
