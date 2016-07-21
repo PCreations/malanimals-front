@@ -1,7 +1,7 @@
 # Running tests
 
  - `cd` in the project root
- - `npm run test`
+ - `npm run test
 
 # Run locally
 
@@ -24,7 +24,7 @@ You can do so in the `webpack.config.js` file by editing the `MALANIMALS_API` va
 
 # Deploy on Heroku
 
-*Not really needed, just in case. Already deployed app is available here : [https://glacial-brook-44401.herokuapp.com/](https://glacial-brook-44401.herokuapp.com/)
+*Not really needed, just in case. Already deployed app is available here : [https://glacial-brook-44401.herokuapp.com/](https://glacial-brook-44401.herokuapp.com/)*
 
  - `cd` in the project root
  - `heroku create`
